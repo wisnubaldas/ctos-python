@@ -1,26 +1,27 @@
 from bandung import Bandung
-import time
+import helper
 import json
-import collections
+
 
 class Main:
     def __init__(self):
-        self.get_data_inv()
+        pass
+
     def get_data_inv(self):
-
         data = Bandung()
-        ok = data.select("SELECT * FROM EksporInvoice_Header where "
-                         "DateOfTransaction = '2019-07-25' and "
-                         "TimeOfTransaction BETWEEN '03:20' AND '03:24';")
-        rowarray_list = []
+        ok = data.get_inv_header(helper.gen_time())
+        list = []
         for row in ok:
-            t = collections.OrderedDict()
-            t['invoice_number'] = row[0]
-            rowarray_list.append(t)
-        j = json.dumps(rowarray_list)
-        print(j)
+            list.append(helper.inv_schema(row))
+            j = json.dumps(list)
+            print(j)
 
-Main()
+
+
+
+x = Main()
+x.get_data_inv()
+
 # while True:
 #     Main()
 #     time.sleep(5)
